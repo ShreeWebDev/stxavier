@@ -99,8 +99,25 @@ export default function Home() {
   return (
     <main className="bg-white overflow-hidden selection:bg-[#F59E0B] selection:text-white pb-0">
       {/* 1. HEADER (Sticky) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white shadow-sm ${isScrolled ? 'py-4' : 'py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+        <div className="bg-[#0B1F3A] text-white">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-2 flex items-center justify-between gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 text-sm">
+              <a href="tel:02512495328" className="text-white/90 hover:text-white transition-colors">
+                02512495328
+              </a>
+              <a href="mailto:info@stxaviersschool.in" className="text-white/90 hover:text-white transition-colors">
+                info@stxaviersschool.in
+              </a>
+            </div>
+            <div className="text-sm font-medium text-white/90 whitespace-nowrap">
+              Established 2002
+            </div>
+          </div>
+        </div>
+
+        <div className={`transition-all duration-300 bg-white ${isScrolled ? 'py-4' : 'py-6'}`}>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
           <Link href="#home" className="flex items-center gap-3 group">
             <SchoolLogo size={72} priority />
             <div className="flex flex-col text-[#0B1F3A]">
@@ -121,16 +138,6 @@ export default function Home() {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D62828] transition-all group-hover:w-full"></span>
               </Link>
             ))}
-            <div className="hidden xl:flex items-center gap-6 text-sm">
-              <a href="tel:02512495328" className="inline-flex items-center gap-2 text-[#0B1F3A]/70 hover:text-[#0B1F3A] transition-colors">
-                <Phone className="w-4 h-4 text-[#D62828]" />
-                <span className="font-medium">0251 2495 328</span>
-              </a>
-              <a href="mailto:info@stxaviersschool.in" className="inline-flex items-center gap-2 text-[#0B1F3A]/70 hover:text-[#0B1F3A] transition-colors">
-                <Mail className="w-4 h-4 text-[#D62828]" />
-                <span className="font-medium">info@stxaviersschool.in</span>
-              </a>
-            </div>
             <Link href="#admissions" className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-transform hover:scale-105 shadow-lg shadow-[#F59E0B]/20">
               Apply Now
             </Link>
@@ -147,6 +154,7 @@ export default function Home() {
               <span className={`block h-0.5 w-full bg-current transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-2.5' : ''}`}></span>
             </div>
           </button>
+          </div>
         </div>
 
         {/* Mobile Nav Menu */}
@@ -179,7 +187,7 @@ export default function Home() {
       </header>
 
       {/* 2. HERO SECTION */}
-      <section id="home" className="relative pt-32 pb-20 md:py-48 min-h-[90vh] flex items-center bg-[#0B1F3A] overflow-hidden">
+      <section id="home" className="relative pt-40 pb-20 md:py-48 min-h-[90vh] flex items-center bg-[#0B1F3A] overflow-hidden">
         {/* Abstract Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#D62828] rounded-full mix-blend-multiply filter blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/3"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#F59E0B] rounded-full mix-blend-multiply filter blur-[120px] opacity-10 translate-y-1/3 -translate-x-1/4"></div>
@@ -272,11 +280,10 @@ export default function Home() {
           <FadeIn className="relative order-2 lg:order-1">
             <div className="aspect-square rounded-[3rem] overflow-hidden relative">
               <Image 
-                src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=800&h=800&auto=format&fit=crop" 
-                alt="Founder Shree Namdev Bhoir" 
+                src="/gallery/DSC_9589.JPG" 
+                alt="About Our School" 
                 fill 
                 className="object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
             {/* Absolute info card */}
@@ -791,8 +798,7 @@ export default function Home() {
               { h: 260, src: "/gallery/DSC03805.JPG" },
               { h: 480, src: "/gallery/DSC03815.JPG" },
               { h: 340, src: "/gallery/DSC03828.JPG" },
-              { h: 560, src: "/gallery/DSC03843.JPG" },
-              { h: 320, src: "/gallery/DSC_9589.JPG" }
+              { h: 560, src: "/gallery/DSC03843.JPG" }
             ].map((item, i) => (
               <FadeIn key={i} delay={(i%4) * 0.1}>
                 <div className="break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer mb-4">
@@ -844,14 +850,18 @@ export default function Home() {
           </FadeIn>
           
           <FadeIn delay={0.2} className="h-full min-h-[400px]">
-            {/* Map Placeholder */}
-            <div className="w-full h-full min-h-[400px] border-4 border-white bg-gray-200 rounded-[2rem] shadow-xl overflow-hidden relative group">
-              <Image src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&h=600&auto=format&fit=crop" alt="Map" fill className="object-cover opacity-80" referrerPolicy="no-referrer" />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="bg-[#0B1F3A] text-white px-6 py-3 rounded-full font-semibold shadow-2xl flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-[#F59E0B]" /> View on Google Maps
-                </div>
-              </div>
+            <div className="w-full h-full min-h-[400px] border-4 border-white bg-gray-200 rounded-[2rem] shadow-xl overflow-hidden">
+              <iframe
+                title="Xavier English High School Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235.45954343260615!2d73.07871542103017!3d19.223454773358352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7be199fea1031%3A0xa91e4019538983a0!2sXavier%20English%20High%20School!5e0!3m2!1sen!2sin!4v1776707733263!5m2!1sen!2sin"
+                width="600"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full min-h-[400px]"
+              />
             </div>
           </FadeIn>
         </div>
