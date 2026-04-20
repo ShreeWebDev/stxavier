@@ -777,24 +777,31 @@ export default function Home() {
           </FadeIn>
           <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             {[
-              { h: 400, id: "1509062522246-3755977927d7" },
-              { h: 300, id: "1427504494785-3a9a2e6ee5d4" },
-              { h: 500, id: "1503676382386-aa69c60e36ab" },
-              { h: 250, id: "1519389953887-9bb3a62883f3" },
-              { h: 450, id: "1544717282-351b6ffaa2cb" },
-              { h: 350, id: "1497633762265-9d179a990aa6" },
-              { h: 600, id: "1512820790803-83ca734da794" },
-              { h: 300, id: "1588072432836-e10032774350" }
+              { h: 400, src: "/gallery/DSC03348.JPG" },
+              { h: 300, src: "/gallery/DSC03352.JPG" },
+              { h: 500, src: "/gallery/DSC03353.JPG" },
+              { h: 250, src: "/gallery/DSC03356.JPG" },
+              { h: 450, src: "/gallery/DSC03364.JPG" },
+              { h: 350, src: "/gallery/DSC03465.JPG" },
+              { h: 600, src: "/gallery/DSC03485.JPG" },
+              { h: 300, src: "/gallery/DSC03637.JPG" },
+              { h: 420, src: "/gallery/DSC03798.JPG" },
+              { h: 280, src: "/gallery/DSC03799.JPG" },
+              { h: 520, src: "/gallery/DSC03800.JPG" },
+              { h: 260, src: "/gallery/DSC03805.JPG" },
+              { h: 480, src: "/gallery/DSC03815.JPG" },
+              { h: 340, src: "/gallery/DSC03828.JPG" },
+              { h: 560, src: "/gallery/DSC03843.JPG" },
+              { h: 320, src: "/gallery/DSC_9589.JPG" }
             ].map((item, i) => (
               <FadeIn key={i} delay={(i%4) * 0.1}>
                 <div className="break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer mb-4">
                   <Image 
-                    src={`https://images.unsplash.com/photo-${item.id}?q=80&w=400&h=${item.h}&auto=format&fit=crop`} 
+                    src={item.src} 
                     alt={`Gallery ${i}`} 
                     width={400} 
                     height={item.h} 
                     className="w-full object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-[#0B1F3A]/0 group-hover:bg-[#0B1F3A]/20 transition-colors duration-300"></div>
                 </div>
