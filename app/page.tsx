@@ -1,69 +1,50 @@
-'use client';
-
+import fs from 'node:fs';
+import path from 'node:path';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import AlumniVoices from './components/AlumniVoices';
 import {
   BookOpen, Award, Users, ChevronRight, Phone, Mail, MapPin,
-  GraduationCap, Target, Heart, FileText, CheckCircle2,
+  Target, Heart, FileText, CheckCircle2,
   Calendar, Star, Quote, ArrowRight, Book, ShieldCheck,
   Microscope, MonitorPlay, Library, Dumbbell, Palette,
   Monitor, BrainCircuit, PenTool, FolderOpen
 } from 'lucide-react';
 
-function SchoolLogo({
-  size,
-  priority,
-  className = '',
-}: {
-  size: number;
-  priority?: boolean;
-  className?: string;
-}) {
-  const [imageFailed, setImageFailed] = useState(false);
+function getGalleryPreviewImages(limit = 15) {
+  const galleryDir = path.join(process.cwd(), 'public', 'gallery');
+  const files = fs.existsSync(galleryDir) ? fs.readdirSync(galleryDir) : [];
+  const heights = [400, 300, 500, 250, 450, 350, 600, 300, 420, 280, 520, 260, 480, 340, 560];
 
-  if (imageFailed) {
-    return (
-      <div
-        className={`flex items-center justify-center text-[#D62828] ${className}`}
-        style={{ width: size, height: size }}
-        aria-label="St. Xavier's High School Logo"
-      >
-        <GraduationCap style={{ width: Math.max(18, Math.floor(size * 0.55)), height: Math.max(18, Math.floor(size * 0.55)) }} />
-      </div>
-    );
+  return files
+    .filter((file) => /\.(jpe?g|png|webp|gif)$/i.test(file))
+    .filter((file) => file.toLowerCase() !== 'st_francis_xavier.jpeg')
+    .sort((a, b) => a.localeCompare(b))
+    .slice(0, limit)
+    .map((file, i) => ({
+      src: `/gallery/${file}`,
+      h: heights[i % heights.length],
+    }));
+}
+
+function readPublicText(relPath: string) {
+  try {
+    const fullPath = path.join(process.cwd(), 'public', relPath);
+    return fs.readFileSync(fullPath, 'utf8');
+  } catch {
+    return '';
   }
+}
 
-  return (
-    <div
-      className={`relative ${className}`}
-      style={{ width: size, height: size }}
-    >
-      <Image
-        src="/logo.png"
-        alt="St. Xavier's High School Logo"
-        fill
-        sizes={`${size}px`}
-        className="object-contain"
-        priority={priority}
-        onError={() => setImageFailed(true)}
-      />
-    </div>
-  );
+function toExcerpt(text: string, maxLen = 220) {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  return `${clean.slice(0, maxLen).trim()}…`;
 }
 
 // Reusable Animation Component
-const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-10%" }}
-    transition={{ duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
-    className={className}
-  >
-    {children}
-  </motion.div>
+const FadeIn = ({ children, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
+  <div className={className}>{children}</div>
 );
 
 const SectionHeading = ({ title, subtitle, centered = false }: { title: string, subtitle?: string, centered?: boolean }) => (
@@ -77,128 +58,36 @@ const SectionHeading = ({ title, subtitle, centered = false }: { title: string, 
 );
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Academics', href: '#academics' },
-    { name: 'Admissions', href: '#admissions' },
-    { name: 'Facilities', href: '#facilities' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' },
+  const galleryPreview = getGalleryPreviewImages(15);
+  const poojaText = readPublicText(path.join('gallery', 'other', 'pooja_sirvi.txt'));
+  const priyankaText = readPublicText(path.join('gallery', 'other', 'priyanka_bora.txt'));
+  const alumni = [
+    {
+      name: 'Pooja Sirvi',
+      role: 'Ex-Xavier (Batch 2021–22) • CA Finalist',
+      excerpt: toExcerpt(poojaText || 'This institution gave me far more than just education — it gave me a strong foundation for life. Teachers here mentor, believe in you, and help you discover your true potential.'),
+      imageSrc: '/gallery/other/pooja_sirvi.png',
+      fullText: poojaText || '',
+    },
+    {
+      name: 'Priyanka Bora',
+      role: 'Ex-Xavier (Batch 2017–18) • Lawyer',
+      excerpt: toExcerpt(priyankaText || 'St. Xavier’s strikes a perfect balance between academics and co-curricular activities. The guidance I received built confidence, discipline, and the determination to face a competitive world.'),
+      imageSrc: '/gallery/other/priyanka_bora.png',
+      fullText: priyankaText || '',
+    },
   ];
 
   return (
     <main className="bg-white overflow-hidden selection:bg-[#F59E0B] selection:text-white pb-0">
-      {/* 1. HEADER (Sticky) */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
-        <div className="bg-[#0B1F3A] text-white">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-2 flex items-center justify-between gap-6">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-6 text-sm">
-              <a href="tel:02512495328" className="text-white/90 hover:text-white transition-colors">
-                02512495328
-              </a>
-              <a href="mailto:info@stxaviersschool.in" className="text-white/90 hover:text-white transition-colors">
-                info@stxaviersschool.in
-              </a>
-            </div>
-            <div className="text-sm font-medium text-white/90 whitespace-nowrap">
-              Established 2002
-            </div>
-          </div>
-        </div>
-
-        <div className={`transition-all duration-300 bg-white ${isScrolled ? 'py-4' : 'py-6'}`}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          <Link href="#home" className="flex items-center gap-3 group">
-            <SchoolLogo size={72} priority />
-            <div className="flex flex-col text-[#0B1F3A]">
-              <span className="font-bold text-xl tracking-tight leading-none">St. Xavier&apos;s</span>
-              <span className="text-xs uppercase tracking-widest font-medium opacity-80 mt-1">High School</span>
-            </div>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href} 
-                className="text-sm font-medium transition-all hover:text-[#D62828] relative group text-[#0B1F3A]/80"
-              >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D62828] transition-all group-hover:w-full"></span>
-              </Link>
-            ))}
-            <Link href="#admissions" className="bg-[#F59E0B] hover:bg-[#F59E0B]/90 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-transform hover:scale-105 shadow-lg shadow-[#F59E0B]/20">
-              Apply Now
-            </Link>
-          </nav>
-
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="lg:hidden p-2 text-[#0B1F3A]" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <div className="space-y-2 w-6">
-              <span className={`block h-0.5 w-full bg-current transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-2.5' : ''}`}></span>
-              <span className={`block h-0.5 w-full bg-current transition-all ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`block h-0.5 w-full bg-current transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-2.5' : ''}`}></span>
-            </div>
-          </button>
-          </div>
-        </div>
-
-        {/* Mobile Nav Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-t border-[#0B1F3A]/5 overflow-hidden"
-            >
-              <div className="flex flex-col px-6 py-4 space-y-4 shadow-xl">
-                {navLinks.map((link) => (
-                  <Link 
-                    key={link.name} 
-                    href={link.href} 
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="text-[#0B1F3A] font-medium text-lg border-b border-[#0B1F3A]/5 pb-2"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <Link href="#admissions" className="bg-[#F59E0B] text-white text-center py-3 rounded-xl font-semibold mt-2">
-                  Apply Now
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
-
-      {/* 2. HERO SECTION */}
+      {/* 1. HERO SECTION */}
       <section id="home" className="relative pt-40 pb-20 md:py-48 min-h-[90vh] flex items-center bg-[#0B1F3A] overflow-hidden">
         {/* Abstract Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#D62828] rounded-full mix-blend-multiply filter blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/3"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#F59E0B] rounded-full mix-blend-multiply filter blur-[120px] opacity-10 translate-y-1/3 -translate-x-1/4"></div>
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-white space-y-8"
-          >
+          <div className="text-white space-y-8">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
               <Star className="w-4 h-4 text-[#F59E0B]" />
               <span className="text-sm font-medium tracking-wide uppercase">Motto • Educating Students for Success in a Changing World</span>
@@ -214,34 +103,29 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="#admissions" className="bg-[#F59E0B] text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white hover:text-[#0B1F3A] transition-all duration-300 shadow-[0_0_40px_rgba(245,158,11,0.3)]">
+              <Link href="/admissions" className="bg-[#D62828] text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white hover:text-[#0B1F3A] transition-all duration-300 shadow-[0_0_40px_rgba(214,40,40,0.3)]">
                 Apply for Admission
               </Link>
-              <Link href="#contact" className="border border-white/30 text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white/10 transition-colors duration-300 backdrop-blur-md">
+              <Link href="/contact" className="border border-white/30 text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white/10 transition-colors duration-300 backdrop-blur-md">
                 Contact Us
               </Link>
             </div>
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="relative hidden lg:block"
-          >
+          <div className="relative hidden lg:block">
             <div className="absolute inset-0 bg-gradient-to-tr from-[#D62828]/20 to-transparent rounded-[3rem] -rotate-3 scale-105 transform translate-x-4 translate-y-4"></div>
             <div className="relative aspect-[4/5] w-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
               <Image 
-                src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=800&h=1000&auto=format&fit=crop" 
-                alt="Students learning" 
+                src="/gallery/st_francis_xavier.jpeg" 
+                alt="St. Francis Xavier" 
                 fill 
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                priority
               />
             </div>
             {/* Superimposed badge */}
             <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(11,31,58,0.15)] flex items-center gap-4 animate-bounce" style={{ animationDuration: '3s' }}>
-              <div className="w-12 h-12 rounded-full bg-[#FFF7ED] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[#FFEDED] flex items-center justify-center">
                 <Target className="text-[#D62828] w-6 h-6" />
               </div>
               <div>
@@ -249,7 +133,7 @@ export default function Home() {
                 <p className="text-[#0B1F3A]/60 text-sm">Years of Legacy</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -263,7 +147,7 @@ export default function Home() {
           ].map((item, i) => (
             <FadeIn key={i} delay={i * 0.1}>
               <div className="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(11,31,58,0.06)] hover:shadow-[0_20px_40px_rgb(11,31,58,0.12)] transition-all duration-300 hover:-translate-y-2 border border-[#0B1F3A]/5 group">
-                <div className="w-14 h-14 rounded-2xl bg-[#FFF7ED] flex items-center justify-center mb-6 group-hover:bg-[#0B1F3A] transition-colors duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-[#FFEDED] flex items-center justify-center mb-6 group-hover:bg-[#0B1F3A] transition-colors duration-300">
                   <item.icon className="w-7 h-7 text-[#D62828] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <h3 className="text-xl font-bold text-[#0B1F3A] mb-3">{item.title}</h3>
@@ -308,7 +192,7 @@ export default function Home() {
                   "Innovative teaching methods and technology-enabled learning for tomorrow’s challenges"
                 ].map((point, i) => (
                   <li key={i} className="flex items-start gap-4">
-                    <div className="mt-1 w-6 h-6 rounded-full bg-[#FFF7ED] flex-shrink-0 flex items-center justify-center">
+                    <div className="mt-1 w-6 h-6 rounded-full bg-[#FFEDED] flex-shrink-0 flex items-center justify-center">
                       <CheckCircle2 className="w-4 h-4 text-[#D62828]" />
                     </div>
                     <span className="text-[#0B1F3A]/80 text-lg font-light leading-relaxed">{point}</span>
@@ -316,7 +200,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-12">
-                <Link href="#contact" className="inline-flex items-center gap-2 text-[#D62828] font-semibold hover:gap-4 transition-all">
+                <Link href="/about" className="inline-flex items-center gap-2 text-[#D62828] font-semibold hover:gap-4 transition-all">
                   Know more about our history <ChevronRight className="w-5 h-5" />
                 </Link>
               </div>
@@ -326,7 +210,7 @@ export default function Home() {
       </section>
 
       {/* 5. MANAGEMENT MESSAGE */}
-      <section className="py-24 bg-[#FFF7ED]">
+      <section className="py-24 bg-[#FFEDED]">
         <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
           <FadeIn>
             <Quote className="w-12 h-12 text-[#D62828] mx-auto mb-8 opacity-20" />
@@ -487,7 +371,7 @@ export default function Home() {
             <div className="lg:col-span-7">
               <FadeIn>
                 <SectionHeading title="Admissions" subtitle="Documents and important notes for the admission process." />
-                <div className="bg-[#FFF7ED] rounded-[2rem] p-8 md:p-12 mb-8">
+                <div className="bg-[#FFEDED] rounded-[2rem] p-8 md:p-12 mb-8">
                   <h4 className="text-xl font-bold text-[#0B1F3A] mb-6 flex items-center gap-3">
                     <FolderOpen className="w-6 h-6 text-[#D62828]"/> Required Documents
                   </h4>
@@ -563,7 +447,7 @@ export default function Home() {
                         { title: "Scholarship Exam", cat: "Scholarship" },
                         { title: "Elementary & Intermediate Drawing Exam", cat: "Drawing" },
                       ].map((exam, i) => (
-                        <div key={i} className="group flex items-center justify-between border-b border-[#0B1F3A]/5 pb-4 last:border-0 hover:bg-[#FFF7ED] -mx-4 px-4 py-2 rounded-lg transition-colors">
+                        <div key={i} className="group flex items-center justify-between border-b border-[#0B1F3A]/5 pb-4 last:border-0 hover:bg-[#FFEDED] -mx-4 px-4 py-2 rounded-lg transition-colors">
                           <div>
                             <p className="font-semibold text-[#0B1F3A]">{exam.title}</p>
                             <p className="text-xs text-[#F59E0B] font-medium tracking-wider uppercase mt-1">{exam.cat}</p>
@@ -597,44 +481,12 @@ export default function Home() {
             </div>
           </FadeIn>
 
-          <div className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory hide-scrollbars cursor-grab active:cursor-grabbing">
-            {/* Testimonial Cards */}
-            {[
-              {
-                name: "Pooja Sirvi",
-                role: "Ex-Xavier (Batch 2021–22) • CA Finalist",
-                text: "This institution gave me far more than just education — it gave me a strong foundation for life. Teachers here mentor, believe in you, and help you discover your true potential.",
-              },
-              {
-                name: "Priyanka Bora",
-                role: "Ex-Xavier (Batch 2017–18) • Lawyer",
-                text: "St. Xavier’s strikes a perfect balance between academics and co-curricular activities. The guidance I received built confidence, discipline, and the determination to face a competitive world.",
-              },
-            ].map((alumni, i) => (
-              <FadeIn key={i} delay={i * 0.1} className="min-w-[85vw] md:min-w-[400px] snap-center">
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-8 h-full flex flex-col hover:bg-white/10 transition-colors">
-                  <div className="flex gap-1 mb-6">
-                    {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 fill-[#F59E0B] text-[#F59E0B]" />)}
-                  </div>
-                  <p className="text-white/80 font-light leading-relaxed mb-8 flex-grow">&quot;{alumni.text}&quot;</p>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[#D62828] to-[#F59E0B] rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg">
-                      {alumni.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="font-bold">{alumni.name}</p>
-                      <p className="text-[#F59E0B] text-sm">{alumni.role}</p>
-                    </div>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <AlumniVoices alumni={alumni} />
         </div>
       </section>
 
       {/* 11 & 12. FACILITIES & EVENTS */}
-      <section id="facilities" className="py-24 bg-[#FFF7ED]">
+      <section id="facilities" className="py-24 bg-[#FFEDED]">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
           {/* Facilities */}
@@ -651,7 +503,7 @@ export default function Home() {
               ].map((fac, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
                   <div className="bg-white rounded-2xl p-6 py-8 text-center shadow-sm border border-[#0B1F3A]/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 group cursor-pointer">
-                    <div className="w-16 h-16 mx-auto bg-[#FFF7ED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#0B1F3A] transition-colors">
+                    <div className="w-16 h-16 mx-auto bg-[#FFEDED] rounded-full flex items-center justify-center mb-4 group-hover:bg-[#0B1F3A] transition-colors">
                       <fac.icon className="w-8 h-8 text-[#0B1F3A] group-hover:text-white transition-colors" />
                     </div>
                     <h4 className="font-semibold text-[#0B1F3A]">{fac.name}</h4>
@@ -659,7 +511,7 @@ export default function Home() {
                 </FadeIn>
               ))}
             </div>
-            <p className="text-[#0B1F3A]/60 font-light mt-8 max-w-2xl">
+            <p className="text-[#0B1F3A]/60 font-light mt-8 max-w-2xl mx-auto text-center">
               School uses Municipal Corporation playground for various sports activities.
             </p>
           </div>
@@ -669,26 +521,25 @@ export default function Home() {
             <FadeIn>
               <div className="flex justify-between items-end mb-10">
                 <h3 className="text-3xl font-bold text-[#0B1F3A]">Life at Campus</h3>
-                <Link href="#" className="hidden md:flex items-center gap-2 text-[#D62828] font-medium hover:underline">View Calendar <ArrowRight className="w-4 h-4" /></Link>
               </div>
             </FadeIn>
             <div className="grid md:grid-cols-4 gap-6">
               {[
-                { title: "Annual Day", img: "1492538368651-71f2d48c863e" },
-                { title: "Sports Meet", img: "1526676537331-7af3dd9da213" },
-                { title: "Science Expo", img: "1532094349884-543bc11b234d" },
-                { title: "Teacher's Day", img: "1577896851231-70ef18881754" }
+                { title: "Computer Lab", src: "/gallery/other/campus/computer_lab.png" },
+                { title: "Science Lab", src: "/gallery/other/campus/science_lab.jpg" },
+                { title: "Library", src: "/gallery/other/campus/library.jpg" },
+                { title: "Playground", src: "/gallery/other/campus/playground.jpg" }
               ].map((event, i) => (
                 <FadeIn key={i} delay={i * 0.1}>
                   <div className="group relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer">
                     <Image 
-                      src={`https://images.unsplash.com/photo-${event.img}?q=80&w=400&h=300&auto=format&fit=crop`} 
+                      src={event.src} 
                       alt={event.title} 
                       fill 
-                      className="object-cover group-hover:scale-110 transition-transform duration-700" 
-                      referrerPolicy="no-referrer"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      sizes="(max-width: 768px) 100vw, 25vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 vvia-[#0B1F3A]/40 to-transparent p-6 flex items-end">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3A]/90 via-[#0B1F3A]/40 to-transparent p-6 flex items-end">
                       <h4 className="text-white font-bold text-lg translate-y-2 group-hover:translate-y-0 transition-transform">{event.title}</h4>
                     </div>
                   </div>
@@ -709,7 +560,7 @@ export default function Home() {
           <div className="mt-12 overflow-x-auto rounded-[2rem] border border-[#0B1F3A]/10 bg-white shadow-sm">
             <table className="w-full min-w-[720px]">
               <thead>
-                <tr className="bg-[#FFF7ED] text-[#0B1F3A]">
+                <tr className="bg-[#FFEDED] text-[#0B1F3A]">
                   <th className="text-left px-6 py-4 font-bold">Year</th>
                   <th className="text-left px-6 py-4 font-bold">Name</th>
                   <th className="text-left px-6 py-4 font-bold">Position</th>
@@ -779,27 +630,13 @@ export default function Home() {
           <FadeIn>
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-3xl md:text-4xl font-semibold text-[#0B1F3A]">Photo Gallery</h2>
-              <button className="text-[#D62828] border border-[#D62828] px-6 py-2 rounded-full hover:bg-[#D62828] hover:text-white transition-colors">See All</button>
+              <Link href="/gallery" className="text-[#D62828] border border-[#D62828] px-6 py-2 rounded-full hover:bg-[#D62828] hover:text-white transition-colors">
+                See All
+              </Link>
             </div>
           </FadeIn>
           <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            {[
-              { h: 400, src: "/gallery/DSC03348.JPG" },
-              { h: 300, src: "/gallery/DSC03352.JPG" },
-              { h: 500, src: "/gallery/DSC03353.JPG" },
-              { h: 250, src: "/gallery/DSC03356.JPG" },
-              { h: 450, src: "/gallery/DSC03364.JPG" },
-              { h: 350, src: "/gallery/DSC03465.JPG" },
-              { h: 600, src: "/gallery/DSC03485.JPG" },
-              { h: 300, src: "/gallery/DSC03637.JPG" },
-              { h: 420, src: "/gallery/DSC03798.JPG" },
-              { h: 280, src: "/gallery/DSC03799.JPG" },
-              { h: 520, src: "/gallery/DSC03800.JPG" },
-              { h: 260, src: "/gallery/DSC03805.JPG" },
-              { h: 480, src: "/gallery/DSC03815.JPG" },
-              { h: 340, src: "/gallery/DSC03828.JPG" },
-              { h: 560, src: "/gallery/DSC03843.JPG" }
-            ].map((item, i) => (
+            {galleryPreview.map((item, i) => (
               <FadeIn key={i} delay={(i%4) * 0.1}>
                 <div className="break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer mb-4">
                   <Image 
@@ -818,7 +655,7 @@ export default function Home() {
       </section>
 
       {/* 15. CONTACT */}
-      <section id="contact" className="relative bg-[#FFF7ED]">
+      <section id="contact" className="relative bg-[#FFEDED]">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-24 grid lg:grid-cols-2 gap-16 items-center">
           <FadeIn>
             <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1F3A] mb-4">Get in Touch</h2>
@@ -826,21 +663,21 @@ export default function Home() {
             
             <div className="space-y-8 bg-white p-10 rounded-[2rem] shadow-[0_20px_50px_rgb(11,31,58,0.05)]">
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FFF7ED] text-[#D62828] rounded-xl"><MapPin className="w-6 h-6" /></div>
+                <div className="p-3 bg-[#FFEDED] text-[#D62828] rounded-xl"><MapPin className="w-6 h-6" /></div>
                 <div>
                   <h4 className="font-bold text-[#0B1F3A] mb-1">Campus Address</h4>
                   <p className="text-[#0B1F3A]/70 font-light">Kalu Nagar, Dombivli (W)<br/>Thane District, Maharashtra.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FFF7ED] text-[#D62828] rounded-xl"><Phone className="w-6 h-6" /></div>
+                <div className="p-3 bg-[#FFEDED] text-[#D62828] rounded-xl"><Phone className="w-6 h-6" /></div>
                 <div>
                   <h4 className="font-bold text-[#0B1F3A] mb-1">Phone</h4>
                   <p className="text-[#0B1F3A]/70 font-light">0251 2495 328</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
-                <div className="p-3 bg-[#FFF7ED] text-[#D62828] rounded-xl"><Mail className="w-6 h-6" /></div>
+                <div className="p-3 bg-[#FFEDED] text-[#D62828] rounded-xl"><Mail className="w-6 h-6" /></div>
                 <div>
                   <h4 className="font-bold text-[#0B1F3A] mb-1">Email ID</h4>
                   <p className="text-[#0B1F3A]/70 font-light">info@stxaviersschool.in</p>
@@ -866,70 +703,6 @@ export default function Home() {
           </FadeIn>
         </div>
       </section>
-
-      {/* 16. FOOTER */}
-      <footer className="bg-[#0B1F3A] pt-24 pb-12 text-white border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <SchoolLogo size={56} />
-              <span className="font-bold text-xl tracking-tight text-white">St. Xavier&apos;s</span>
-            </div>
-            <p className="text-white/60 font-light text-sm leading-relaxed">
-              Educating Students for Success in a Changing World. Shaping the future generations with core human values and academic brilliance.
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="font-bold text-lg mb-6 tracking-wide relative inline-block">
-              Quick Links
-              <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#D62828] -mb-2"></span>
-            </h4>
-            <ul className="space-y-3">
-              {['About Us', 'Academic Curriculum', 'Admissions Form', 'Contact Directory'].map((link, i) => (
-                <li key={i}><a href="#" className="text-white/60 hover:text-[#F59E0B] hover:translate-x-1 inline-block transition-transform text-sm font-light">{link}</a></li>
-              ))}
-            </ul>
-          </div>
-          
-          <div>
-            <h4 className="font-bold text-lg mb-6 tracking-wide relative inline-block">
-              Student Space
-              <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#D62828] -mb-2"></span>
-            </h4>
-            <ul className="space-y-3">
-              {['E-Learning Portal', 'Event Gallery', 'School Calendar', 'Alumni Network'].map((link, i) => (
-                <li key={i}><a href="#" className="text-white/60 hover:text-[#F59E0B] hover:translate-x-1 inline-block transition-transform text-sm font-light">{link}</a></li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-lg mb-6 tracking-wide relative inline-block">
-              Newsletter
-              <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#D62828] -mb-2"></span>
-            </h4>
-            <p className="text-white/60 font-light text-sm mb-4">Stay updated with latest school news and announcements.</p>
-            <div className="flex bg-white/10 rounded-full p-1 border border-white/20">
-              <input type="email" placeholder="Email address" className="bg-transparent border-none text-white text-sm outline-none px-4 w-full placeholder:text-white/40" />
-              <button className="bg-[#D62828] text-white p-2 rounded-full hover:bg-white hover:text-[#D62828] transition-colors">
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/40 text-sm font-light text-center md:text-left">
-            © {new Date().getFullYear()} St. Xavier&apos;s English High School. All rights reserved.
-          </p>
-          <div className="flex gap-4">
-            <a href="#" className="text-white/40 hover:text-white text-sm font-light transition-colors">Privacy Policy</a>
-            <span className="text-white/20">|</span>
-            <a href="#" className="text-white/40 hover:text-white text-sm font-light transition-colors">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
