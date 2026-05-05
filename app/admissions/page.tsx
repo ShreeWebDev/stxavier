@@ -84,10 +84,6 @@ export default function AdmissionsPage() {
                   <span className="font-light group-hover:text-white/70">0251 2495 328</span>
                 </a>
               </div>
-
-              <button className="mt-8 w-full bg-[#0B1F3A] text-white py-5 rounded-2xl font-bold text-lg hover:bg-[#D62828] transition-colors shadow-xl">
-                Download Application Form
-              </button>
             </div>
 
             <div className="lg:col-span-5">

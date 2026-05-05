@@ -103,7 +103,13 @@ export default function AlumniVoices({ alumni }: { alumni: Alumni[] }) {
 
             <div className="px-6 py-6">
               <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-[#0B1F3A]/5 border border-[#0B1F3A]/10">
-                <Image src={active.imageSrc} alt={active.name} fill className="object-cover" />
+                <Image
+                  src={active.imageSrc}
+                  alt={active.name}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 768px"
+                />
               </div>
 
               <div className="mt-6 text-[#0B1F3A]/80 leading-relaxed font-light whitespace-pre-line">
@@ -116,4 +122,3 @@ export default function AlumniVoices({ alumni }: { alumni: Alumni[] }) {
     </>
   );
 }
-
