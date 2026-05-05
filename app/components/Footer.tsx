@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import SchoolLogo from './SchoolLogo';
 
 export default function Footer() {
@@ -65,23 +64,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
-          <h4 className="font-bold text-lg mb-6 tracking-wide relative inline-block">
-            Newsletter
-            <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#D62828] -mb-2" />
-          </h4>
-          <p className="text-white/60 font-light text-sm mb-4">Stay updated with latest school news and announcements.</p>
-          <div className="flex bg-white/10 rounded-full p-1 border border-white/20">
-            <input
-              type="email"
-              placeholder="Email address"
-              className="bg-transparent border-none text-white text-sm outline-none px-4 w-full placeholder:text-white/40"
-            />
-            <button className="bg-[#D62828] text-white p-2 rounded-full hover:bg-white hover:text-[#D62828] transition-colors">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+        <div />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -101,4 +84,3 @@ export default function Footer() {
     </footer>
   );
 }
-
