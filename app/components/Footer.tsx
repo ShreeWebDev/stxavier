@@ -13,8 +13,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#0B1F3A] pt-24 pb-12 text-white border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        <div className="lg:col-span-1">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
+        <div>
           <div className="flex items-center gap-3 mb-6">
             <SchoolLogo size={56} />
             <span className="font-bold text-xl tracking-tight text-white">St. Xavier&apos;s</span>
@@ -30,7 +30,7 @@ export default function Footer() {
             Pages
             <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-[#D62828] -mb-2" />
           </h4>
-          <ul className="space-y-3">
+          <ul className="space-y-3 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-10 lg:gap-y-3">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
@@ -63,8 +63,6 @@ export default function Footer() {
             <li>Kalu Nagar, Dombivli (W), Thane District, Maharashtra.</li>
           </ul>
         </div>
-
-        <div />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">

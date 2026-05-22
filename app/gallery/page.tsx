@@ -11,6 +11,25 @@ function encodePathSegments(...segments: string[]) {
   return segments.map((s) => encodeURIComponent(s)).join('/');
 }
 
+function getGallerySectionTitle(folderName: string) {
+  const key = folderName.toLowerCase();
+  const map: Record<string, string> = {
+    '15th aug': '15th August',
+    anualsports: 'Annual Sports',
+    classroom: 'Classroom',
+    comon: 'Common',
+    'drawing competition': 'Drawing Competition',
+    'investiture ceremony': 'Investiture Ceremony',
+    'marathi day': 'Marathi Day',
+    'pta meeting': 'PTA Meeting',
+    'science day': 'Science Day',
+    shivjayanti: 'Shiv Jayanti',
+    singing: 'Singing',
+  };
+
+  return map[key] ?? folderName;
+}
+
 function getGallerySections(): GallerySection[] {
   const galleryDir = path.join(process.cwd(), 'public', 'gallery');
   const dirents = fs.existsSync(galleryDir) ? fs.readdirSync(galleryDir, { withFileTypes: true }) : [];
@@ -21,23 +40,23 @@ function getGallerySections(): GallerySection[] {
     .filter(isImageFile)
     .filter((f) => f.toLowerCase() !== 'st_francis_xavier.jpeg')
     .sort((a, b) => a.localeCompare(b))
-    .map((file) => ({
+    .map((file, i) => ({
       src: `/gallery/${encodePathSegments(file)}`,
-      alt: file,
+      alt: `Highlights photo ${i + 1}`,
     }));
 
   const preferredOrder = [
-    '15th Aug',
-    'anualsports',
-    'classroom',
-    'comon',
-    'drawing competition',
-    'Investiture ceremony',
-    'marathi day',
-    'PTA meeting',
-    'science day',
-    'shivjayanti',
-    'singing',
+    '15th August',
+    'Annual Sports',
+    'Classroom',
+    'Common',
+    'Drawing Competition',
+    'Investiture Ceremony',
+    'Marathi Day',
+    'PTA Meeting',
+    'Science Day',
+    'Shiv Jayanti',
+    'Singing',
   ].map((x) => x.toLowerCase());
 
   const folders = dirents
@@ -49,15 +68,16 @@ function getGallerySections(): GallerySection[] {
     .map((folderName) => {
       const folderPath = path.join(galleryDir, folderName);
       const files = fs.existsSync(folderPath) ? fs.readdirSync(folderPath) : [];
+      const title = getGallerySectionTitle(folderName);
       const images = files
         .filter(isImageFile)
         .filter((f) => f.toLowerCase() !== 'st_francis_xavier.jpeg')
         .sort((a, b) => a.localeCompare(b))
-        .map((file) => ({
+        .map((file, i) => ({
           src: `/gallery/${encodePathSegments(folderName, file)}`,
-          alt: `${folderName} - ${file}`,
+          alt: `${title} photo ${i + 1}`,
         }));
-      return { title: folderName, images };
+      return { title, images };
     })
     .filter((s) => s.images.length > 0)
     .sort((a, b) => {

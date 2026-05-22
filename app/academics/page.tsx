@@ -1,4 +1,5 @@
-import { Book, CheckCircle2, Palette } from 'lucide-react';
+import { Book, CheckCircle2, FileText, Palette } from 'lucide-react';
+import Image from 'next/image';
 import PageHero from '../components/PageHero';
 
 export default function AcademicsPage() {
@@ -70,6 +71,117 @@ export default function AcademicsPage() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative py-24 bg-gradient-to-b from-white via-[#FFEDED] to-white border-b border-[#0B1F3A]/5 overflow-hidden">
+        <div className="absolute -top-28 left-1/2 -translate-x-1/2 h-72 w-[48rem] rounded-full bg-[#D62828]/10 blur-3xl" />
+        <div className="absolute -bottom-32 right-0 h-72 w-[44rem] rounded-full bg-[#0B1F3A]/10 blur-3xl" />
+        <div className="relative max-w-7xl mx-auto px-6 md:px-12">
+          <div className="rounded-[2.75rem] bg-white/80 backdrop-blur border border-[#0B1F3A]/10 shadow-[0_24px_60px_rgba(11,31,58,0.10)] p-8 md:p-12">
+            <div className="mb-14 max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#0B1F3A]/10 text-[#0B1F3A] font-semibold shadow-sm">
+                SSC Result Highlights
+              </div>
+              <h2 className="mt-6 text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1F3A] mb-4">SSC BOARD MARCH 2025-26</h2>
+              <div className="h-1 w-24 bg-[#D62828] rounded-full mb-6 mx-auto" />
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  rank: 1,
+                  name: 'AARUSHI SANJAY GUPTA',
+                  percentage: '95.80%',
+                  src: '/gallery/ssc_toppers/RANK-1_AARUSHI_SANJAY_GUPTA.png',
+                },
+                {
+                  rank: 2,
+                  name: 'DHANYA SHEKHAR MOGAVEERA',
+                  percentage: '93.20%',
+                  src: '/gallery/ssc_toppers/RANK-2_DHANYA_SHEKHAR_MOGAVEERA.png',
+                },
+                {
+                  rank: 3,
+                  name: 'DHANISHTHA MORESHWAR VARANDE',
+                  percentage: '93.00%',
+                  src: '/gallery/ssc_toppers/RANK-3_DHANISHTHA_MORESHWAR_VARANDE.png',
+                },
+              ].map((t) => (
+                <div
+                  key={t.rank}
+                  className="group bg-white border border-[#0B1F3A]/10 rounded-3xl overflow-hidden shadow-[0_14px_36px_rgba(11,31,58,0.10)] hover:shadow-[0_22px_52px_rgba(11,31,58,0.14)] transition-all hover:-translate-y-1"
+                >
+                  <div className="px-7 pt-7 text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#D62828] to-[#B91C1C] text-white font-semibold shadow-lg shadow-[#D62828]/20">
+                      Rank: {t.rank}
+                    </div>
+                  </div>
+
+                  <div className="px-7 mt-6">
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-white border border-[#0B1F3A]/10 shadow-[0_12px_28px_rgba(11,31,58,0.10)]">
+                      <Image
+                        src={t.src}
+                        alt={`${t.name} - Rank ${t.rank}`}
+                        fill
+                        className="object-contain group-hover:scale-[1.02] transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="px-7 py-7 text-center">
+                    <p className="text-[#0B1F3A] font-bold text-lg leading-snug">{t.name}</p>
+                    <div className="mt-4 inline-flex items-center px-5 py-2.5 rounded-full bg-[#0B1F3A] text-white font-bold shadow-lg shadow-[#0B1F3A]/20">
+                      {t.percentage}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-12 flex flex-col items-center gap-8">
+              <a
+                href="/gallery/ssc_toppers/PHOTO_SSCBOARD_MARCH_26_RESULT_TOPER.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#D62828] text-white px-10 py-4 rounded-full font-semibold hover:bg-[#D62828]/90 transition-all hover:-translate-y-0.5 shadow-lg shadow-[#D62828]/20"
+              >
+                <FileText className="w-5 h-5" />
+                View More
+              </a>
+
+              <div className="w-full max-w-4xl bg-gradient-to-b from-white to-[#FFEDED]/40 border border-[#0B1F3A]/10 rounded-3xl overflow-hidden shadow-[0_18px_44px_rgba(11,31,58,0.10)]">
+                <div className="px-8 md:px-10 py-6 md:py-7 bg-[#0B1F3A] text-white">
+                  <h3 className="text-xl md:text-2xl font-bold">Performance Summary (SSC BOARD MARCH 2025-26)</h3>
+                </div>
+                <div className="p-8 md:p-10">
+                  <div className="grid sm:grid-cols-2 gap-4 text-[#0B1F3A]/80 font-light">
+                    <div className="flex items-center justify-between gap-4 bg-white rounded-2xl px-5 py-4 border border-[#0B1F3A]/10 shadow-sm">
+                      <span>Distinction</span>
+                      <span className="font-semibold text-[#0B1F3A]">54 students</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 bg-white rounded-2xl px-5 py-4 border border-[#0B1F3A]/10 shadow-sm">
+                      <span>First Class</span>
+                      <span className="font-semibold text-[#0B1F3A]">42 students</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 bg-white rounded-2xl px-5 py-4 border border-[#0B1F3A]/10 shadow-sm">
+                      <span>Second Class</span>
+                      <span className="font-semibold text-[#0B1F3A]">11 students</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 bg-white rounded-2xl px-5 py-4 border border-[#0B1F3A]/10 shadow-sm">
+                      <span>Pass Class</span>
+                      <span className="font-semibold text-[#0B1F3A]">0 students (NIL)</span>
+                    </div>
+                    <div className="sm:col-span-2 flex items-center justify-between gap-4 bg-white rounded-2xl px-5 py-4 border border-[#0B1F3A]/10 shadow-sm">
+                      <span>Scored Above 90%</span>
+                      <span className="font-semibold text-[#0B1F3A]">5 students</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
