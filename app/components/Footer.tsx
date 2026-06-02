@@ -8,6 +8,7 @@ export default function Footer() {
     { label: 'Admissions', href: '/admissions' },
     { label: 'Facilities', href: '/facilities' },
     { label: 'Gallery', href: '/gallery' },
+    { label: 'Career', href: '/career' },
     { label: 'Contact', href: '/contact' },
   ];
 

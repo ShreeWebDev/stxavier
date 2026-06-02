@@ -81,56 +81,104 @@ export default function Home() {
   return (
     <main className="bg-white overflow-hidden selection:bg-[#F59E0B] selection:text-white pb-0">
       {/* 1. HERO SECTION */}
-      <section id="home" className="relative pt-40 pb-20 md:py-48 min-h-[90vh] flex items-center bg-[#0B1F3A] overflow-hidden">
+      <section id="home" className="relative pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-20 min-h-[90vh] flex items-center bg-[#0B1F3A] overflow-hidden">
         {/* Abstract Background Elements */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#D62828] rounded-full mix-blend-multiply filter blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/3"></div>
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#F59E0B] rounded-full mix-blend-multiply filter blur-[120px] opacity-10 translate-y-1/3 -translate-x-1/4"></div>
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full grid lg:grid-cols-2 gap-16 items-center">
-          <div className="text-white space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
-              <Star className="w-4 h-4 text-[#F59E0B]" />
-              <span className="text-sm font-medium tracking-wide uppercase">Motto • Educating Students for Success in a Changing World</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-bold tracking-tight leading-[1.05]">
-              St. Xavier&apos;s <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">English High School</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/80 font-light max-w-xl leading-relaxed">
-              Educating Students for Success in a Changing World. 25+ years of excellence in nurturing young minds to become tomorrow&apos;s leaders.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link href="/contact" className="bg-[#D62828] text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white hover:text-[#0B1F3A] transition-all duration-300 shadow-[0_0_40px_rgba(214,40,40,0.3)]">
-                Contact Us
-              </Link>
-            </div>
-          </div>
-          
-          <div className="relative hidden lg:block">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#D62828]/20 to-transparent rounded-[3rem] -rotate-3 scale-105 transform translate-x-4 translate-y-4"></div>
-            <div className="relative aspect-[4/5] w-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
-              <Image 
-                src="/gallery/st_francis_xavier.jpeg" 
-                alt="St. Francis Xavier" 
-                fill 
-                className="object-cover"
-                priority
-              />
-            </div>
-            {/* Superimposed badge */}
-            <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(11,31,58,0.15)] flex items-center gap-4 animate-bounce" style={{ animationDuration: '3s' }}>
-              <div className="w-12 h-12 rounded-full bg-[#FFEDED] flex items-center justify-center">
-                <Target className="text-[#D62828] w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-[#0B1F3A] font-bold text-xl">25+</p>
-                <p className="text-[#0B1F3A]/60 text-sm">Years of Legacy</p>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 w-full">
+          <div className="mb-10 sm:mb-12">
+            <div className="relative rounded-full border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-70" />
+              <div className="relative flex items-center gap-3 px-4 sm:px-6 py-2.5 sm:py-3">
+                <span className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 border border-white/10">
+                  <Star className="w-4 h-4 text-[#D62828]" />
+                </span>
+                <div className="flex-1 overflow-hidden">
+                  <div className="hero-marquee flex w-max items-center whitespace-nowrap text-[11px] sm:text-sm md:text-base font-semibold tracking-wide uppercase text-white/90">
+                    <div className="hero-marquee-chunk flex items-center gap-8 pr-8">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="text-white/70">Motto</span>
+                        <span className="text-white/40">•</span>
+                        <span>Educating Students for Success in a Changing World</span>
+                      </span>
+                      <span className="text-white/30">•</span>
+                    </div>
+                    <div className="hero-marquee-chunk flex items-center gap-8 pr-8" aria-hidden="true">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="text-white/70">Motto</span>
+                        <span className="text-white/40">•</span>
+                        <span>Educating Students for Success in a Changing World</span>
+                      </span>
+                      <span className="text-white/30">•</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="text-white space-y-8">
+              <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-bold tracking-tight leading-[1.05]">
+                St. Xavier&apos;s <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">English High School</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-white/80 font-light max-w-xl leading-relaxed">
+                Educating Students for Success in a Changing World. 25+ years of excellence in nurturing young minds to become tomorrow&apos;s leaders.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link href="/contact" className="bg-[#D62828] text-white px-8 py-4 rounded-full font-semibold text-center hover:bg-white hover:text-[#0B1F3A] transition-all duration-300 shadow-[0_0_40px_rgba(214,40,40,0.3)]">
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+            
+            <div className="relative hidden lg:block">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#D62828]/20 to-transparent rounded-[3rem] -rotate-3 scale-105 transform translate-x-4 translate-y-4"></div>
+              <div className="relative aspect-[4/5] w-full rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
+                <Image 
+                  src="/gallery/st_francis_xavier.jpeg" 
+                  alt="St. Francis Xavier" 
+                  fill 
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              {/* Superimposed badge */}
+              <div className="absolute -bottom-8 -left-8 bg-white p-6 rounded-3xl shadow-[0_20px_50px_rgba(11,31,58,0.15)] flex items-center gap-4 animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="w-12 h-12 rounded-full bg-[#FFEDED] flex items-center justify-center">
+                  <Target className="text-[#D62828] w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-[#0B1F3A] font-bold text-xl">25+</p>
+                  <p className="text-[#0B1F3A]/60 text-sm">Years of Legacy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <style>{`
+            .hero-marquee {
+              animation: heroMarquee 18s linear infinite;
+            }
+            @keyframes heroMarquee {
+              from {
+                transform: translateX(0);
+              }
+              to {
+                transform: translateX(-50%);
+              }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .hero-marquee {
+                animation: none;
+                transform: none;
+              }
+            }
+          `}</style>
         </div>
       </section>
 
@@ -654,6 +702,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+
       </section>
 
       {/* 13. TOPPERS */}
