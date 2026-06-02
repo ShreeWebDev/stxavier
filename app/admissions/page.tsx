@@ -68,12 +68,12 @@ export default function AdmissionsPage() {
 
               <div className="flex flex-col sm:flex-row gap-6">
                 <a
-                  href="mailto:info@stxaviersschool.in"
+                  href="mailto:info@stxavierenglishschool.in"
                   className="flex-1 border border-[#0B1F3A]/10 rounded-2xl p-6 flex flex-col justify-center gap-2 hover:bg-[#0B1F3A] hover:border-[#0B1F3A] hover:text-white transition-all group cursor-pointer"
                 >
                   <Mail className="w-6 h-6 text-[#D62828]" />
                   <span className="font-semibold text-lg">Email Us</span>
-                  <span className="font-light group-hover:text-white/70">info@stxaviersschool.in</span>
+                  <span className="font-light group-hover:text-white/70">info@stxavierenglishschool.in</span>
                 </a>
                 <a
                   href="tel:02512495328"

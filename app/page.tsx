@@ -455,10 +455,10 @@ export default function Home() {
                   </ul>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-6">
-                  <a href="mailto:info@stxaviersschool.in" className="flex-1 border border-[#0B1F3A]/10 rounded-2xl p-6 flex flex-col justify-center gap-2 hover:bg-[#0B1F3A] hover:border-[#0B1F3A] hover:text-white transition-all group cursor-pointer">
+                  <a href="mailto:info@stxavierenglishschool.in" className="flex-1 border border-[#0B1F3A]/10 rounded-2xl p-6 flex flex-col justify-center gap-2 hover:bg-[#0B1F3A] hover:border-[#0B1F3A] hover:text-white transition-all group cursor-pointer">
                     <Mail className="w-6 h-6 text-[#D62828]" />
                     <span className="font-semibold text-lg">Email Us</span>
-                    <span className="font-light group-hover:text-white/70">info@stxaviersschool.in</span>
+                    <span className="font-light group-hover:text-white/70">info@stxavierenglishschool.in</span>
                   </a>
                   <a href="tel:02512495328" className="flex-1 border border-[#0B1F3A]/10 rounded-2xl p-6 flex flex-col justify-center gap-2 hover:bg-[#0B1F3A] hover:border-[#0B1F3A] hover:text-white transition-all group cursor-pointer">
                     <Phone className="w-6 h-6 text-[#D62828]" />
@@ -834,7 +834,7 @@ export default function Home() {
                 <div className="p-3 bg-[#FFEDED] text-[#D62828] rounded-xl"><Mail className="w-6 h-6" /></div>
                 <div>
                   <h4 className="font-bold text-[#0B1F3A] mb-1">Email ID</h4>
-                  <p className="text-[#0B1F3A]/70 font-light">info@stxaviersschool.in</p>
+                  <p className="text-[#0B1F3A]/70 font-light">info@stxavierenglishschool.in</p>
                 </div>
               </div>
             </div>

@@ -46,7 +46,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-bold text-[#0B1F3A] mb-1">Email ID</h4>
-                  <p className="text-[#0B1F3A]/70 font-light">info@stxaviersschool.in</p>
+                  <p className="text-[#0B1F3A]/70 font-light">info@stxavierenglishschool.in</p>
                 </div>
               </div>
             </div>

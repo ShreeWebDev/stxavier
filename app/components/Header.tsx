@@ -43,8 +43,8 @@ export default function Header() {
             <a href="tel:02512495328" className="text-white/90 hover:text-white transition-colors">
               02512495328
             </a>
-            <a href="mailto:info@stxaviersschool.in" className="text-white/90 hover:text-white transition-colors">
-              info@stxaviersschool.in
+            <a href="mailto:info@stxavierenglishschool.in" className="text-white/90 hover:text-white transition-colors">
+              info@stxavierenglishschool.in
             </a>
           </div>
           <div className="text-sm font-medium text-white/90 whitespace-nowrap">Established 2002</div>

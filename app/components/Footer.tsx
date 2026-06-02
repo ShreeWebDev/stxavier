@@ -57,8 +57,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:info@stxaviersschool.in" className="hover:text-[#F59E0B] transition-colors">
-                info@stxaviersschool.in
+              <a href="mailto:info@stxavierenglishschool.in" className="hover:text-[#F59E0B] transition-colors">
+                info@stxavierenglishschool.in
               </a>
             </li>
             <li>Kalu Nagar, Dombivli (W), Thane District, Maharashtra.</li>

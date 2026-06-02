@@ -28,7 +28,7 @@ export default async function CareerPage({ searchParams }: PageProps) {
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5">
-              <div className="sticky top-28">
+              <div className="lg:sticky lg:top-32">
                 <div className="mb-10 max-w-xl">
                   <h2 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#0B1F3A] mb-4">
                     Teacher Application
@@ -66,7 +66,7 @@ export default async function CareerPage({ searchParams }: PageProps) {
 
                   <div className="mt-10 grid sm:grid-cols-2 gap-4">
                     <a
-                      href="mailto:info@stxaviersschool.in"
+                      href="mailto:info@stxavierenglishschool.in"
                       className="bg-white rounded-2xl p-5 border border-[#0B1F3A]/10 hover:bg-[#0B1F3A] hover:text-white transition-all group"
                     >
                       <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export default async function CareerPage({ searchParams }: PageProps) {
                         <div>
                           <p className="font-semibold">Email</p>
                           <p className="text-sm font-light text-[#0B1F3A]/70 group-hover:text-white/70">
-                            info@stxaviersschool.in
+                            info@stxavierenglishschool.in
                           </p>
                         </div>
                       </div>
@@ -109,7 +109,7 @@ export default async function CareerPage({ searchParams }: PageProps) {
                 <div className="mb-8 rounded-[1.5rem] border border-red-200 bg-red-50 px-6 py-5 text-red-900">
                   <p className="font-semibold">Could not submit your application.</p>
                   <p className="mt-1 text-sm text-red-900/80 font-light">
-                    Please try again, or email your resume to info@stxaviersschool.in.
+                    Please try again, or email your resume to info@stxavierenglishschool.in.
                   </p>
                 </div>
               ) : null}
