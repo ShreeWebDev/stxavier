@@ -64,34 +64,6 @@ export default async function CareerPage({ searchParams }: PageProps) {
                     </div>
                   </div>
 
-                  <div className="mt-10 grid sm:grid-cols-2 gap-4">
-                    <a
-                      href="mailto:info@stxavierenglishschool.in"
-                      className="bg-white rounded-2xl p-5 border border-[#0B1F3A]/10 hover:bg-[#0B1F3A] hover:text-white transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Mail className="w-5 h-5 text-[#D62828] group-hover:text-white" />
-                        <div>
-                          <p className="font-semibold">Email</p>
-                          <p className="text-sm font-light text-[#0B1F3A]/70 group-hover:text-white/70">
-                            info@stxavierenglishschool.in
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      href="tel:02512495328"
-                      className="bg-white rounded-2xl p-5 border border-[#0B1F3A]/10 hover:bg-[#0B1F3A] hover:text-white transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Phone className="w-5 h-5 text-[#D62828] group-hover:text-white" />
-                        <div>
-                          <p className="font-semibold">Phone</p>
-                          <p className="text-sm font-light text-[#0B1F3A]/70 group-hover:text-white/70">0251 2495 328</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
